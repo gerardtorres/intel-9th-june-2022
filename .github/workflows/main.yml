@@ -46,7 +46,7 @@ jobs:
         - name: Download the public folder
           uses: actions/download-artifact@v3
           with:
-            name: public_package       
+            name: public_package  
 
         - name: Copy the public_packge to Ubuntu Server
           uses: mdallasanta/ssh-scp-deploy@v1.2.0
