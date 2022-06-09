@@ -55,8 +55,8 @@ jobs:
         - name: Copy the public_packge to Ubuntu Server
           uses: mdallasanta/ssh-scp-deploy@v1.2.0
           with:
-            local: 'public/*'                                                 
-            remote: '~/public/'                                                
+            local: '*'                                                 
+            remote: '~/public/.'                                                
             host: ${{secrets.HOST}}                                     
             user: ${{secrets.USER}}                                     
             key: ${{secrets.KEY}}                                        
