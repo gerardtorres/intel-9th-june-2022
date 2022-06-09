@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: public_package
-          path: public  
+          path: /public/  
 
   deployment:
       runs-on: ubuntu-latest
