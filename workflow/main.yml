@@ -1,0 +1,61 @@
+name: Deploy Gatsby Application
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Repo
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: Install Gatsby Cli
+        run: npm install --location=global gatsby-cli
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build the Gatsby Project
+        run: gatsby build
+
+      - name: Verify the Public Folder
+        run: ls -la public
+
+      - name: Upload dev_config
+        uses: actions/upload-artifact@v3
+        with:
+          name: public_package
+          path: public  
+
+deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code.
+        uses: actions/checkout@v3
+
+      - name: Download the public folder
+        uses: actions/download-artifact@v3
+        with:
+          name: public_package       
+
+      - name: Copy the public_packge to Ubuntu Server
+        uses: mdallasanta/ssh-scp-deploy@v1.2.0
+        with:
+          local: 'public'                                                 
+          remote: '~/'                                                
+          host: ${{secrets.HOST}}                                     
+          user: ${{secrets.USER}}                                     
+          key: ${{secrets.KEY}}                                        
+          ssh_options: -o StrictHostKeyChecking=no
+          pre_upload: sudo rm -rf /var/www/html/*
+          post_upload: sudo mv ~/public/* /var/www/html/ 
