@@ -35,9 +35,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: public_package
-          path: /public/  
+          path: public  
 
   deployment:
+      needs: build
       runs-on: ubuntu-latest
       steps:
         - name: Checkout the code.
