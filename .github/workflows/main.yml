@@ -49,6 +49,9 @@ jobs:
           with:
             name: public_package  
 
+        - name: Verify the Public Folder
+          run: ls -la public
+
         - name: Copy the public_packge to Ubuntu Server
           uses: mdallasanta/ssh-scp-deploy@v1.2.0
           with:
