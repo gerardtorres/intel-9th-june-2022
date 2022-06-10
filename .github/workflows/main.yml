@@ -7,6 +7,22 @@ on:
   workflow_dispatch:
 
 jobs:
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Repo
+        uses: actions/checkout@v3
+
+      - name: Run npm audit
+        run: npm audit --json > npm-audit.json
+
+      - name: Upload npm-audit.json
+        uses: actions/upload-artifact@v3
+        with:
+          name: npm_audit
+          path: npm-audit.json
+
   build:
     runs-on: ubuntu-latest
     steps:
