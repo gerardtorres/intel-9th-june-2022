@@ -20,6 +20,9 @@ jobs:
           node-version: 16
           cache: 'npm'
 
+      - name: Install Dependencies
+        run: npm install
+
       - name: Run npm audit
         run: npm audit --json > npmaudit.json
 
