@@ -27,6 +27,7 @@ jobs:
         run: npm audit --json > npmaudit.json
 
       - name: Upload npm-udit.json
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: npmaudit
